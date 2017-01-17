@@ -16,7 +16,7 @@ package br.ufla.dcc.ppoo.modelo;
 public class Filme {
     private String nome;
     private String genero;
-    private String ano;
+    private int ano;
     private String duracao;
     private String descricao;
 
@@ -29,7 +29,7 @@ public class Filme {
      * @param descricao
      */
     
-    public Filme( String nome, String genero, String ano, String duracao, String descricao){
+    public Filme( String nome, String genero, int ano, String duracao, String descricao){
         this.nome = nome;
         this.genero = genero;
         this.ano = ano;
@@ -69,14 +69,14 @@ public class Filme {
     /**
      * @return the ano
      */
-    public String getAno() {
+    public int getAno() {
         return ano;
     }
 
     /**
      * @param ano the ano to set
      */
-    public void setAno(String ano) {
+    public void setAno(int ano) {
         this.ano = ano;
     }
 

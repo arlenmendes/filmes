@@ -330,7 +330,7 @@ public class TelaMeusFilmes {
         //String texto = String.format("Linha selecionada: %d", tbFilmes.getSelectedRow());
         txtNome.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getNome());
         txtDuracao.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getDescricao());
-        txtAno.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getAno());
+        txtAno.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getAno()+"");
         txtGenero.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getGenero());
         txtDesccricao.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getDuracao());
         
@@ -339,7 +339,7 @@ public class TelaMeusFilmes {
         private Filme carregarFilme() {
         return new Filme(txtNome.getText(),
                 txtGenero.getText(),
-                txtAno.getText(),
+                Integer.parseInt(txtAno.getText()),
                 txtDuracao.getText(),
                 txtDesccricao.getText()
                 );
