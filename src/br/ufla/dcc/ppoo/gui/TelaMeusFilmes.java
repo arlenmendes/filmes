@@ -39,7 +39,7 @@ public class TelaMeusFilmes {
     private JDialog janela;
     private GridBagLayout layout;
     private GridBagConstraints gbc;
-    private JButton btnNovaFilme;
+    private JButton btnNovoFilme;
     private JButton btnEditarFilme;
     private JButton btnDeletarFilme;
     private JButton btnSalvarFilme;
@@ -147,7 +147,7 @@ public class TelaMeusFilmes {
         txtGenero.setEditable(false);
         txtDesccricao.setEditable(false);
 
-        btnNovaFilme.setEnabled(true);
+        btnNovoFilme.setEnabled(true);
         btnEditarFilme.setEnabled(false);
         btnSalvarFilme.setEnabled(false);
         btnDeletarFilme.setEnabled(false);
@@ -164,7 +164,7 @@ public class TelaMeusFilmes {
         txtGenero.setEditable(false);
         txtDesccricao.setEditable(false);
 
-        btnNovaFilme.setEnabled(true);
+        btnNovoFilme.setEnabled(true);
         btnEditarFilme.setEnabled(true);
         btnSalvarFilme.setEnabled(false);
         btnDeletarFilme.setEnabled(true);
@@ -172,7 +172,7 @@ public class TelaMeusFilmes {
     }
 
     /**
-     * Trata o estado da tela para cadastro de nova série
+     * Trata o estado da tela para cadastro de novo filme
      */
     private void prepararComponentesEstadoNovaFilme() {
         tbFilmes.clearSelection();
@@ -190,7 +190,7 @@ public class TelaMeusFilmes {
         txtGenero.setEditable(true);
         txtDesccricao.setEditable(true);
 
-        btnNovaFilme.setEnabled(false);
+        btnNovoFilme.setEnabled(false);
         btnEditarFilme.setEnabled(false);
         btnSalvarFilme.setEnabled(true);
         btnDeletarFilme.setEnabled(false);
@@ -198,7 +198,7 @@ public class TelaMeusFilmes {
     }
 
     /**
-     * Trata o estado da tela para cadastro série editada
+     * Trata o estado da tela para update de filme
      */
     private void prepararComponentesEstadoEditouFilme() {
         tbFilmes.setEnabled(false);
@@ -209,7 +209,7 @@ public class TelaMeusFilmes {
         txtGenero.setEditable(true);
         txtDesccricao.setEditable(true);
 
-        btnNovaFilme.setEnabled(false);
+        btnNovoFilme.setEnabled(false);
         btnEditarFilme.setEnabled(false);
         btnSalvarFilme.setEnabled(true);
         btnDeletarFilme.setEnabled(false);
@@ -289,7 +289,7 @@ public class TelaMeusFilmes {
                 GridBagConstraints.HORIZONTAL,
                 4, 1, 3, 1);
 
-        btnNovaFilme = new JButton(I18N.obterBotaoNovo(),
+        btnNovoFilme = new JButton(I18N.obterBotaoNovo(),
                 GerenciadorDeImagens.NOVO);
 
         btnEditarFilme = new JButton(I18N.obterBotaoEditar(),
@@ -307,7 +307,7 @@ public class TelaMeusFilmes {
         prepararComponentesEstadoInicial();
 
         JPanel painelBotoes = new JPanel();
-        painelBotoes.add(btnNovaFilme);
+        painelBotoes.add(btnNovoFilme);
         painelBotoes.add(btnEditarFilme);
         painelBotoes.add(btnSalvarFilme);
         painelBotoes.add(btnDeletarFilme);
@@ -329,10 +329,10 @@ public class TelaMeusFilmes {
         
         //String texto = String.format("Linha selecionada: %d", tbFilmes.getSelectedRow());
         txtNome.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getNome());
-        txtDuracao.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getDescricao());
+        txtDuracao.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getDuracao());
         txtAno.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getAno()+"");
         txtGenero.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getGenero());
-        txtDesccricao.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getDuracao());
+        txtDesccricao.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getDescricao());
         
     }
     
@@ -389,7 +389,7 @@ public class TelaMeusFilmes {
             }
         });
 
-        btnNovaFilme.addActionListener(new ActionListener() {
+        btnNovoFilme.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
