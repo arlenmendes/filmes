@@ -39,7 +39,7 @@ public class TelaPrincipal {
     // tela de cadastro de usuário
     private final TelaCadastroUsuario telaCadastroUsuario;
     // tela de gestão dos filmes
-    private final TelaMinhasListas2 telaMinhasListas;
+    private final TelaMinhasListas telaMinhasListas;
 
     // janela da tela principal
     private JFrame janela;
@@ -65,10 +65,10 @@ public class TelaPrincipal {
     /**
      * Construtor; incializa as demais telas e sessão de usuário.
      */
-    public TelaPrincipal() {
+    public TelaPrincipal() throws Exception {
         telaAutenticacao = new TelaAutenticacao(this);
         telaCadastroUsuario = new TelaCadastroUsuario(this);
-        telaMinhasListas = new TelaMinhasListas2();
+        telaMinhasListas = new TelaMinhasListas();
         sessaoUsuario = SessaoUsuario.obterInstancia();
     }
 
@@ -261,7 +261,7 @@ public class TelaPrincipal {
      * 
      * @param args Argumentos passados na execução do programa.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         new TelaPrincipal().inicializar();
     }
 

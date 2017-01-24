@@ -23,7 +23,7 @@ public class GerenciadorListas {
         repositorioListas = ListaDAOLista.getInstancia();
     }
     
-    public void criar(Lista lista){
+    public int criar(Lista lista){
         
         int resposta = repositorioListas.adicionarLista(lista);
         
@@ -36,6 +36,8 @@ public class GerenciadorListas {
         } else if (resposta == 503){
             JOptionPane.showMessageDialog(null, "Palavras chave nao informada.");
         }
+        
+        return resposta;
     }
     
     public List<Lista> buscarMinhasListas(){

@@ -5,7 +5,7 @@
  */
 package br.ufla.dcc.ppoo.dao.lista;
 
-import br.ufla.dcc.ppoo.gui.TelaMinhasListas2;
+import br.ufla.dcc.ppoo.gui.TelaMinhasListas;
 import br.ufla.dcc.ppoo.modelo.Filme;
 import br.ufla.dcc.ppoo.modelo.Lista;
 import br.ufla.dcc.ppoo.modelo.Usuario;
@@ -44,10 +44,10 @@ public class Teste {
         arlen.setFilmes(filmes);
         arlen.setUsuario(user);
         
-        gF.criar(arlen);
-        gF.criar(arlen);
+        int a = gF.criar(arlen);
+        int b = gF.criar(arlen);
         
-//        TelaMinhasListas2 tela = new TelaMinhasListas2();
+//        TelaMinhasListas tela = new TelaMinhasListas();
 //        tela.setVisible(true);
 
     }
@@ -74,7 +74,7 @@ public class Teste {
         gF.criar(arlen);
         gF.criar(arlen);
         
-//        TelaMinhasListas2 tela = new TelaMinhasListas2();
+//        TelaMinhasListas tela = new TelaMinhasListas();
 //        tela.setVisible(true);
 
     }
