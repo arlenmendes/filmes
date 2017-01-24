@@ -75,4 +75,11 @@ public class FilmeDAOLista implements FilmeDAO {
     public void deletarFilme(Filme filme, int a) {
         listaFilme.remove(a);
     }
+    
+    @Override
+    public void limparInstancia(){
+        while(listaFilme.size() > 0){
+            listaFilme.remove(listaFilme.size()-1);
+        }
+    };
 }

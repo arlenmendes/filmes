@@ -5,6 +5,7 @@
  */
 package br.ufla.dcc.ppoo.dao.lista;
 
+import br.ufla.dcc.ppoo.dao.ListaDAO;
 import br.ufla.dcc.ppoo.modelo.Lista;
 import br.ufla.dcc.ppoo.seguranca.SessaoUsuario;
 import java.util.ArrayList;
@@ -14,18 +15,30 @@ import java.util.List;
  *
  * @author arlen
  */
-public class ListaDAOLista {
+public class ListaDAOLista implements ListaDAO {
     
     private static ListaDAOLista instancia;
     
     private List<Lista> listas;
     
+    private int status = 0;
+    
     public ListaDAOLista(){
         listas = new ArrayList<>();
     }
     
-    private int status = 0;
+    /**
+     * @return the instancia
+     */
     
+    public static ListaDAOLista getInstancia() {
+        if(instancia == null){
+            instancia = new ListaDAOLista();
+        }
+        return instancia;
+    }
+    
+    @Override
     public int adicionarLista(Lista lista){
         status = 0;
         /*
@@ -61,6 +74,7 @@ public class ListaDAOLista {
         return status;
     }
     
+    @Override
     public List<Lista> buscarListaUsuario(){
         
         List<Lista> resposta = new ArrayList<>();
@@ -74,6 +88,7 @@ public class ListaDAOLista {
         return resposta;
     }
     
+    @Override
     public List<Lista> buscarListaPublica(){
         List<Lista> resposta = null;
         
@@ -86,20 +101,4 @@ public class ListaDAOLista {
         return resposta;
     }
     
-    /**
-     * @return the instancia
-     */
-    public static ListaDAOLista getInstancia() {
-        if(instancia == null){
-            instancia = new ListaDAOLista();
-        }
-        return instancia;
-    }
-
-    /**
-     * @param aInstancia the instancia to set
-     */
-    public static void setInstancia(ListaDAOLista aInstancia) {
-        instancia = aInstancia;
-    }
 }

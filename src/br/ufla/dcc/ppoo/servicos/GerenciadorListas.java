@@ -5,6 +5,7 @@
  */
 package br.ufla.dcc.ppoo.servicos;
 
+import br.ufla.dcc.ppoo.dao.ListaDAO;
 import br.ufla.dcc.ppoo.dao.lista.ListaDAOLista;
 import br.ufla.dcc.ppoo.modelo.Lista;
 import java.util.List;
@@ -17,7 +18,7 @@ import javax.swing.JOptionPane;
 public class GerenciadorListas {
     
 // atributo utilizado como camada de acesso a dados do cadastro de usuários
-    ListaDAOLista repositorioListas;
+    ListaDAO repositorioListas;
     
     public GerenciadorListas(){
         repositorioListas = ListaDAOLista.getInstancia();

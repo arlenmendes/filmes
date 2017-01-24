@@ -7,6 +7,7 @@ package br.ufla.dcc.ppoo.gui;
 
 import br.ufla.dcc.ppoo.dao.lista.Teste;
 import br.ufla.dcc.ppoo.modelo.Lista;
+import br.ufla.dcc.ppoo.servicos.GerenciadorFilmes;
 import br.ufla.dcc.ppoo.servicos.GerenciadorListas;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,23 +34,19 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     /**
      * Creates new form TelaMinhasListas2
      */
-    public TelaMinhasListas() throws Exception {
+    public TelaMinhasListas() {
         gerenciadorlisas = new GerenciadorListas();
-        construirTabela();
-        initComponents();
-        prepararComponenteInicial();
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
     }
     
     public void inicializar() throws Exception{
-        Teste teste = new Teste();
-        teste.main2();
+//        Teste teste = new Teste();
+//        teste.main2();
         construirTabela();
         initComponents();
         prepararComponenteInicial();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        chaves = new ArrayList<>();
     }
 
     /**
@@ -217,7 +214,11 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-                // TODO add your handling code here:
+        try {
+            salvarLista();
+        } catch (Exception ex) {
+            Logger.getLogger(TelaMinhasListas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -302,9 +303,11 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     private javax.swing.JTextField txtPalavra;
     // End of variables declaration//GEN-END:variables
     
+    
+    //eventos dos botoes da tela
     private void adicionarChaves() {
-        chaves = new ArrayList<>();
         chaves.add(txtPalavra.getText());
+        System.out.println(chaves);
         String palavras = "";
         palavras = lbPalvras.getText() + txtPalavra.getText() + ", ";
         lbPalvras.setText(palavras);
@@ -316,6 +319,20 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         telaMeusFilmes.inicializar();
     }
     
+    private void salvarLista() throws Exception{
+        Lista lista = new Lista(txtNome.getText(), chaves);
+        GerenciadorFilmes gF = new GerenciadorFilmes();
+        lista.setFilmes(gF.getListaFilme());
+        
+        int resposta = gerenciadorlisas.criar(lista);
+        if(resposta == 200){
+            gF.limparInstancia();
+            this.dispose();
+            inicializar();
+        }
+    }
+    
+    //prepara a tela para seus respectivos eventos
     private void prepararComponenteInicial(){
         
         txtNome.setEditable(false);

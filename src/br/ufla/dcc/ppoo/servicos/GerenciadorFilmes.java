@@ -31,4 +31,8 @@ public class GerenciadorFilmes {
     public void deletarFilme (Filme filme, int a){
         repositorioFilme.deletarFilme(filme, a);
     }
+    
+    public void limparInstancia(){
+        repositorioFilme.limparInstancia();
+    }
 }

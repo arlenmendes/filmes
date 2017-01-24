@@ -419,7 +419,7 @@ public class TelaMeusFilmes {
      */
     private void exibirTela() {
         janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        janela.setLocationRelativeTo(telaPrincipal.obterJanela());
+        janela.setLocationRelativeTo(null);
         janela.setModal(true);
         janela.setVisible(true);
         janela.setResizable(false);
