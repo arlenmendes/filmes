@@ -38,7 +38,7 @@ public class FilmeDAOLista implements FilmeDAO {
     }
     
     /**
-     * Adiciona um objeto Filme na Lista 
+     * Retonar um ArrayList contendo
      * de Filmes
      */  
     @Override
@@ -47,7 +47,7 @@ public class FilmeDAOLista implements FilmeDAO {
     }
 
      /**
-     * Retonar um ArrayList contendo
+     * Adiciona um objeto Filme na Lista 
      * objetos da classe Filme
      */
     @Override
@@ -56,8 +56,8 @@ public class FilmeDAOLista implements FilmeDAO {
     }
     
      /**
-     * Deleta série a partir
-     * de um indicador da posição da Filme na Lista
+     * Atualiza o filme a partir
+     * de um indicador da posição do Filme na Lista
      */
      public void editarFilme(Filme filme,int a) {
         listaFilme.get(a).setNome(filme.getNome());
@@ -68,7 +68,7 @@ public class FilmeDAOLista implements FilmeDAO {
     }
 
     /**
-     * Deleta série a partir
+     * Deleta filme a partir
      * de um indicador da posição da Filme na Lista
      */
     @Override

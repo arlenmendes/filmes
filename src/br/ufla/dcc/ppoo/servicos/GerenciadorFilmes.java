@@ -17,7 +17,7 @@ public class GerenciadorFilmes {
             }
 
     public List<Filme> getListaFilme(){
-    return repositorioFilme.getListaFilmes();
+        return repositorioFilme.getListaFilmes();
     }
 
     public void cadastrarFilme(Filme filme){

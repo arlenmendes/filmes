@@ -37,7 +37,6 @@ public class Filme {
         this.descricao = descricao;
     }
 
-
     /**
      * @return the nome
      */

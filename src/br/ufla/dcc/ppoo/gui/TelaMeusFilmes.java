@@ -3,6 +3,8 @@ package br.ufla.dcc.ppoo.gui;
 import br.ufla.dcc.ppoo.i18n.I18N;
 import br.ufla.dcc.ppoo.imagens.GerenciadorDeImagens;
 import br.ufla.dcc.ppoo.modelo.Filme;
+import br.ufla.dcc.ppoo.modelo.Usuario;
+import br.ufla.dcc.ppoo.seguranca.SessaoUsuario;
 import br.ufla.dcc.ppoo.servicos.GerenciadorFilmes;
 import br.ufla.dcc.ppoo.util.Utilidades;
 import java.awt.Component;
@@ -25,7 +27,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
- * Classe que representa a tela Minhas Séries
+ * Classe que representa a tela Minhas filmes
  *
  * @author Paulo Jr. e Julio Alves
  */
@@ -56,10 +58,11 @@ public class TelaMeusFilmes {
     private JTextField txtGenero;
     private JTextArea txtDesccricao;
     private final GerenciadorFilmes gerenciadorFilmes;
-
+    
+    
 
     /**
-     * Constrói a tela de autenticação guardando a referência da tela principal.
+     * Constrói a tela de Meus Filmes guardando a referência da tela principal.
      *
      * @param telaPrincipal Referência da tela principal.
      */
@@ -98,13 +101,6 @@ public class TelaMeusFilmes {
          dados [i][0] = gerenciadorFilmes.getListaFilme().get(i).getNome();
          dados[i][1] = gerenciadorFilmes.getListaFilme().get(i).getGenero();
         }
-        
-        
-        /* Dados "fake"
-        Object[][] dados = {
-            {"The Big Bang Theory", "Sitcom"},
-            {"Game of Thrones", "Aventura, Drama, Épico, Fantasia"}
-        }; */
 
         tbFilmes = new JTable(dados, titulosColunas);
         tbFilmes.setPreferredScrollableViewportSize(new Dimension(500, 70));
@@ -155,7 +151,7 @@ public class TelaMeusFilmes {
     }
 
     /**
-     * Trata o estado da tela para seleção de séries
+     * Trata o estado da tela para seleção de filmes
      */
     private void prepararComponentesEstadoSelecaoFilme() {
         txtNome.setEditable(false);
@@ -174,7 +170,7 @@ public class TelaMeusFilmes {
     /**
      * Trata o estado da tela para cadastro de novo filme
      */
-    private void prepararComponentesEstadoNovaFilme() {
+    private void prepararComponentesEstadoNovoFilme() {
         tbFilmes.clearSelection();
         tbFilmes.setEnabled(true);
         this.opsalve=1;
@@ -320,14 +316,10 @@ public class TelaMeusFilmes {
     }
 
     /**
-     * Trata a selação de séries na grade.
+     * Trata a selação de filmes na grade.
      */
     private void selecionouFilme() {
         
-
-        // Dados "fake"
-        
-        //String texto = String.format("Linha selecionada: %d", tbFilmes.getSelectedRow());
         txtNome.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getNome());
         txtDuracao.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getDuracao());
         txtAno.setText(gerenciadorFilmes.getListaFilme().get(tbFilmes.getSelectedRow()).getAno()+"");
@@ -393,7 +385,7 @@ public class TelaMeusFilmes {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                prepararComponentesEstadoNovaFilme();
+                prepararComponentesEstadoNovoFilme();
             }
         });
 
