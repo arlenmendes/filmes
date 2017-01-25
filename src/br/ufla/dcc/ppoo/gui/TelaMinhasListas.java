@@ -7,6 +7,7 @@ package br.ufla.dcc.ppoo.gui;
 
 import br.ufla.dcc.ppoo.dao.lista.Teste;
 import br.ufla.dcc.ppoo.modelo.Lista;
+import br.ufla.dcc.ppoo.seguranca.SessaoUsuario;
 import br.ufla.dcc.ppoo.servicos.GerenciadorFilmes;
 import br.ufla.dcc.ppoo.servicos.GerenciadorListas;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         txtPalavra = new javax.swing.JTextField();
         btnAdicionarChaves = new javax.swing.JButton();
         lbAddPalavras = new javax.swing.JLabel();
-        lbPalvras = new javax.swing.JLabel();
+        lbPalavras = new javax.swing.JLabel();
         btnFilmes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -170,7 +171,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(54, 54, 54)
-                                        .addComponent(lbPalvras))
+                                        .addComponent(lbPalavras))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(12, 12, 12)
                                         .addComponent(lbAddPalavras)))
@@ -198,7 +199,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
                 .addComponent(lbAddPalavras)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbPalvras)
+                    .addComponent(lbPalavras)
                     .addComponent(btnFilmes))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -297,7 +298,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     private javax.swing.JLabel lbAddPalavras;
     private javax.swing.JLabel lbAddPalvra;
     private javax.swing.JLabel lbNome;
-    private javax.swing.JLabel lbPalvras;
+    private javax.swing.JLabel lbPalavras;
     private javax.swing.JTable tbListas;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPalavra;
@@ -307,10 +308,9 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     //eventos dos botoes da tela
     private void adicionarChaves() {
         chaves.add(txtPalavra.getText());
-        System.out.println(chaves);
         String palavras = "";
-        palavras = lbPalvras.getText() + txtPalavra.getText() + ", ";
-        lbPalvras.setText(palavras);
+        palavras = lbPalavras.getText() + txtPalavra.getText() + ", ";
+        lbPalavras.setText(palavras);
         txtPalavra.setText("");
     }
     
@@ -323,6 +323,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         Lista lista = new Lista(txtNome.getText(), chaves);
         GerenciadorFilmes gF = new GerenciadorFilmes();
         lista.setFilmes(gF.getListaFilme());
+        lista.setUsuario(SessaoUsuario.obterInstancia().obterUsuario());
         
         int resposta = gerenciadorlisas.criar(lista);
         if(resposta == 200){
@@ -336,8 +337,10 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     private void prepararComponenteInicial(){
         
         txtNome.setEditable(false);
+        txtNome.setText("");
         txtPalavra.setEditable(false);
         
+        lbPalavras.setText("");
         btnNova.setEnabled(true);
         btnFilmes.setEnabled(false);
         btnEditar.setEnabled(false);
@@ -367,6 +370,10 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         titulosColunas[1] = "Palavras-Chave";
         
         List<Lista> listas = gerenciadorlisas.buscarMinhasListas();
+        
+        if(listas.size() > 0){
+            System.out.println(listas.get(0).getNome());
+        }
         
         Object[][] dados = new Object [listas.size()][2];
         
