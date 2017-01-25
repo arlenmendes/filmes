@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -79,8 +80,10 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         setTitle("Listas de Filmes");
 
         tbListas.setModel(model);
+        tbListas.setColumnSelectionAllowed(true);
         tbListas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbListas);
+        tbListas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -371,19 +374,15 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         
         List<Lista> listas = gerenciadorlisas.buscarMinhasListas();
         
-        if(listas.size() > 0){
-            System.out.println(listas.get(0).getNome());
-        }
-        
         Object[][] dados = new Object [listas.size()][2];
         
         for(int i=0; i< listas.size(); i++){
             dados[i][0] = listas.get(i).getNome();
-            String chaves = "";
+            String chave = "";
             for(int j = 0; j<listas.get(i).getChaves().size(); j++){
-                chaves = chaves + listas.get(i).getChaves().get(j) + ", ";
+                chave = chave + listas.get(i).getChaves().get(j) + ", ";
             }
-            dados[i][1] = chaves;
+            dados[i][1] = chave;
         }
         
         model = new DefaultTableModel(dados, titulosColunas);
