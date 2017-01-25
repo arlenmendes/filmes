@@ -32,4 +32,6 @@ public interface FilmeDAO {
      */
     public void deletarFilme(Filme filme, int a);
     
+    public void limparInstancia();
+    
 }

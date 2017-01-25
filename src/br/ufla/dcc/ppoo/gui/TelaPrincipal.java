@@ -18,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -37,7 +39,7 @@ public class TelaPrincipal {
     // tela de cadastro de usuário
     private final TelaCadastroUsuario telaCadastroUsuario;
     // tela de gestão dos filmes
-    private final TelaMeusFilmes telaMeusFilmes;
+    private final TelaMinhasListas telaMinhasListas;
 
     // janela da tela principal
     private JFrame janela;
@@ -58,15 +60,15 @@ public class TelaPrincipal {
 
     // Itens de menu específicos para usuários logados no sistema    
     private JMenuItem menuLogout;
-    private JMenuItem menuMeusFilmes;
+    private JMenuItem menuMinhasListas;
 
     /**
      * Construtor; incializa as demais telas e sessão de usuário.
      */
-    public TelaPrincipal() {
+    public TelaPrincipal() throws Exception {
         telaAutenticacao = new TelaAutenticacao(this);
         telaCadastroUsuario = new TelaCadastroUsuario(this);
-        telaMeusFilmes = new TelaMeusFilmes(this);
+        telaMinhasListas = new TelaMinhasListas();
         sessaoUsuario = SessaoUsuario.obterInstancia();
     }
 
@@ -128,10 +130,14 @@ public class TelaPrincipal {
             }
         });
 
-        menuMeusFilmes.addActionListener(new ActionListener() {
+        menuMinhasListas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                telaMeusFilmes.inicializar();
+                try {
+                    telaMinhasListas.inicializar();
+                } catch (Exception ex) {
+                    Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -168,7 +174,7 @@ public class TelaPrincipal {
         menuEntrar = new JMenuItem(I18N.obterMenuEntrar(), GerenciadorDeImagens.ENTRAR);
         menuCadastrarUsuario = new JMenuItem(I18N.obterMenuCadastrarUsuario(), GerenciadorDeImagens.CADASTRAR_USUARIO);
         menuLogout = new JMenuItem(I18N.obterMenuLogout(), GerenciadorDeImagens.LOGOUT);
-        menuMeusFilmes = new JMenuItem(I18N.obterMenuMeusFilmes(), GerenciadorDeImagens.MEUS_FILMES);
+        menuMinhasListas = new JMenuItem(I18N.obterMenuMeusFilmes(), GerenciadorDeImagens.MEUS_FILMES);
 
         if (!sessaoUsuario.estahLogado()) {
             menuInicio.add(menuEntrar);
@@ -176,7 +182,7 @@ public class TelaPrincipal {
         } else {            
             // Aqui você poderá adicionar outros itens de menu, se necessário.
             
-            menuInicio.add(menuMeusFilmes);
+            menuInicio.add(menuMinhasListas);
             menuInicio.add(menuLogout);
         }
 
@@ -255,7 +261,7 @@ public class TelaPrincipal {
      * 
      * @param args Argumentos passados na execução do programa.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         new TelaPrincipal().inicializar();
     }
 

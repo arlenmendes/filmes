@@ -17,7 +17,7 @@ public class GerenciadorFilmes {
             }
 
     public List<Filme> getListaFilme(){
-    return repositorioFilme.getListaFilmes();
+        return repositorioFilme.getListaFilmes();
     }
 
     public void cadastrarFilme(Filme filme){
@@ -30,5 +30,9 @@ public class GerenciadorFilmes {
     
     public void deletarFilme (Filme filme, int a){
         repositorioFilme.deletarFilme(filme, a);
+    }
+    
+    public void limparInstancia(){
+        repositorioFilme.limparInstancia();
     }
 }
