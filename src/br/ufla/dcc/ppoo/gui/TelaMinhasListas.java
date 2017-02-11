@@ -222,6 +222,8 @@ public class TelaMinhasListas extends javax.swing.JFrame {
             salvarLista();
         } catch (Exception ex) {
             Logger.getLogger(TelaMinhasListas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Throwable ex) {
+            Logger.getLogger(TelaMinhasListas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -322,7 +324,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         telaMeusFilmes.inicializar();
     }
     
-    private void salvarLista() throws Exception{
+    private void salvarLista() throws Exception, Throwable{
         Lista lista = new Lista(txtNome.getText(), chaves);
         GerenciadorFilmes gF = new GerenciadorFilmes();
         lista.setFilmes(gF.getListaFilme());
@@ -331,8 +333,9 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         int resposta = gerenciadorlisas.criar(lista);
         if(resposta == 200){
             gF.limparInstancia();
-            this.dispose();
-            inicializar();
+            prepararComponenteInicial();
+            atualizarTabela();
+            //tbListas.updateUI();
         }
     }
     
@@ -368,6 +371,10 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     
     private void construirTabela(){
         
+        if(gerenciadorlisas.buscarMinhasListas().size() > 0){
+            model.getDataVector().clear();
+        }
+        
         Object[] titulosColunas = new Object[2];
         titulosColunas[0] = "Nome";
         titulosColunas[1] = "Palavras-Chave";
@@ -388,6 +395,18 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         model = new DefaultTableModel(dados, titulosColunas);
     }
     
-    
+    public void atualizarTabela(){
+        List<Lista> listas = gerenciadorlisas.buscarMinhasListas();
+        
+        Lista lista = listas.get(listas.size() - 1);
+        
+        String chave = "";
+        
+        for(int j = 0; j < lista.getChaves().size();j++){
+            chave = chave + lista.getChaves().get(j) + ", ";
+        }
+        
+        model.addRow(new Object[]{lista.getNome(), chave});
+    }
 
 }
