@@ -43,6 +43,7 @@ public class Teste {
         filmes.add(new Filme("Caio", "Dores", 1006, "666min", "ASTAH"));
         arlen.setFilmes(filmes);
         arlen.setUsuario(user);
+        arlen.setPublica(true);
         
         int a = gF.criar(arlen);
         int b = gF.criar(arlen);
@@ -70,6 +71,7 @@ public class Teste {
         filmes.add(new Filme("Caio", "Dores", 1006, "666min", "ASTAH"));
         arlen.setFilmes(filmes);
         arlen.setUsuario(user);
+        arlen.setPublica(true);
         
         gF.criar(arlen);
         gF.criar(arlen);

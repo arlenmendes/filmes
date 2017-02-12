@@ -49,4 +49,12 @@ public class GerenciadorListas {
         return lista;
     }
     
+    public List<Lista> buscaListaPublica(){
+        
+        List<Lista> lista = null;
+        
+        lista = repositorioListas.buscarListaPublica();
+        
+        return lista;
+    }
 }

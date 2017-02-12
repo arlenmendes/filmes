@@ -90,7 +90,7 @@ public class ListaDAOLista implements ListaDAO {
     
     @Override
     public List<Lista> buscarListaPublica(){
-        List<Lista> resposta = null;
+        List<Lista> resposta = new ArrayList<>();
         
         listas.forEach(lista -> {
             if(lista.isPublica()){

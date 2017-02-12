@@ -20,6 +20,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -55,10 +56,11 @@ public class TelaPrincipal {
     private JMenuItem menuIdiomaIngles;
     private JMenuItem menuSair;
     private JMenuItem menuSobre;
-
+    
     // Itens de menu específicos para usuários logados no sistema    
     private JMenuItem menuLogout;
     private JMenuItem menuMinhasListas;
+    private JMenuItem menuListasPublicas;
 
     /**
      * Construtor; incializa as demais telas e sessão de usuário.
@@ -137,6 +139,17 @@ public class TelaPrincipal {
                 }
             }
         });
+        
+        menuListasPublicas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TelaListasPublicas tela = new TelaListasPublicas(janela, false);
+                tela.setLocationRelativeTo(null);
+                tela.setVisible(true);
+                tela.setModal(true);
+                
+            }
+        });
 
         menuCadastrarUsuario.addActionListener(new ActionListener() {
             @Override
@@ -172,6 +185,7 @@ public class TelaPrincipal {
         menuCadastrarUsuario = new JMenuItem(I18N.obterMenuCadastrarUsuario(), GerenciadorDeImagens.CADASTRAR_USUARIO);
         menuLogout = new JMenuItem(I18N.obterMenuLogout(), GerenciadorDeImagens.LOGOUT);
         menuMinhasListas = new JMenuItem(I18N.obterMenuMeusFilmes(), GerenciadorDeImagens.MEUS_FILMES);
+        menuListasPublicas = new JMenuItem("Listas Publicas");
 
         if (!sessaoUsuario.estahLogado()) {
             menuInicio.add(menuEntrar);
@@ -180,6 +194,7 @@ public class TelaPrincipal {
             // Aqui você poderá adicionar outros itens de menu, se necessário.
             
             menuInicio.add(menuMinhasListas);
+            menuInicio.add(menuListasPublicas);
             menuInicio.add(menuLogout);
         }
 
