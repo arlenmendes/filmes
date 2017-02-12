@@ -38,8 +38,6 @@ public class TelaPrincipal {
     private final TelaAutenticacao telaAutenticacao;
     // tela de cadastro de usuário
     private final TelaCadastroUsuario telaCadastroUsuario;
-    // tela de gestão dos filmes
-    private final TelaMinhasListas telaMinhasListas;
 
     // janela da tela principal
     private JFrame janela;
@@ -68,7 +66,6 @@ public class TelaPrincipal {
     public TelaPrincipal() throws Exception {
         telaAutenticacao = new TelaAutenticacao(this);
         telaCadastroUsuario = new TelaCadastroUsuario(this);
-        telaMinhasListas = new TelaMinhasListas();
         sessaoUsuario = SessaoUsuario.obterInstancia();
     }
 
@@ -134,7 +131,7 @@ public class TelaPrincipal {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    telaMinhasListas.inicializar();
+                    new TelaMinhasListas();
                 } catch (Exception ex) {
                     Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
                 }

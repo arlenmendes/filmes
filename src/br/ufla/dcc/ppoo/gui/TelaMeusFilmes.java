@@ -45,7 +45,7 @@ public class TelaMeusFilmes {
     private JButton btnEditarFilme;
     private JButton btnDeletarFilme;
     private JButton btnSalvarFilme;
-    private JButton btnCancelar;
+    private JButton btnFinalizar;
     private JTable tbFilmes;
     private JLabel lbTitulo;
     private JLabel lbNumTemporadas;
@@ -147,7 +147,7 @@ public class TelaMeusFilmes {
         btnEditarFilme.setEnabled(false);
         btnSalvarFilme.setEnabled(false);
         btnDeletarFilme.setEnabled(false);
-        btnCancelar.setEnabled(true);
+        btnFinalizar.setEnabled(true);
     }
 
     /**
@@ -164,7 +164,7 @@ public class TelaMeusFilmes {
         btnEditarFilme.setEnabled(true);
         btnSalvarFilme.setEnabled(false);
         btnDeletarFilme.setEnabled(true);
-        btnCancelar.setEnabled(true);
+        btnFinalizar.setEnabled(true);
     }
 
     /**
@@ -190,7 +190,7 @@ public class TelaMeusFilmes {
         btnEditarFilme.setEnabled(false);
         btnSalvarFilme.setEnabled(true);
         btnDeletarFilme.setEnabled(false);
-        btnCancelar.setEnabled(true);
+        btnFinalizar.setEnabled(true);
     }
 
     /**
@@ -209,7 +209,7 @@ public class TelaMeusFilmes {
         btnEditarFilme.setEnabled(false);
         btnSalvarFilme.setEnabled(true);
         btnDeletarFilme.setEnabled(false);
-        btnCancelar.setEnabled(true);
+        btnFinalizar.setEnabled(true);
     }
 
     /**
@@ -297,7 +297,7 @@ public class TelaMeusFilmes {
         btnDeletarFilme = new JButton(I18N.obterBotaoDeletar(),
                 GerenciadorDeImagens.DELETAR);
 
-        btnCancelar = new JButton(I18N.obterBotaoCancelar(),
+        btnFinalizar = new JButton(I18N.obterBotaoCancelar(),
                 GerenciadorDeImagens.CANCELAR);
 
         prepararComponentesEstadoInicial();
@@ -307,7 +307,7 @@ public class TelaMeusFilmes {
         painelBotoes.add(btnEditarFilme);
         painelBotoes.add(btnSalvarFilme);
         painelBotoes.add(btnDeletarFilme);
-        painelBotoes.add(btnCancelar);
+        painelBotoes.add(btnFinalizar);
 
         adicionarComponente(painelBotoes,
                 GridBagConstraints.CENTER,
@@ -341,7 +341,7 @@ public class TelaMeusFilmes {
      * Configura os eventos da tela.
      */
     private void configurarEventosTela() {
-        btnCancelar.addActionListener(new ActionListener() {
+        btnFinalizar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 janela.dispose();
