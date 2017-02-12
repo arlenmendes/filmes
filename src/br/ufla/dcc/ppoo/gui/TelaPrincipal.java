@@ -143,10 +143,16 @@ public class TelaPrincipal {
         menuListasPublicas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TelaListasPublicas tela = new TelaListasPublicas(janela, false);
-                tela.setLocationRelativeTo(null);
-                tela.setVisible(true);
-                tela.setModal(true);
+                TelaListasPublicas tela;
+                try {
+                    tela = new TelaListasPublicas(janela, false);
+                    tela.setLocationRelativeTo(null);
+                    tela.setVisible(true);
+                    tela.setModal(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
                 
             }
         });
