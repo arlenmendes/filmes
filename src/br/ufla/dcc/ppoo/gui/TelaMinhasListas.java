@@ -485,7 +485,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         if(l.isPublica()){
             lbVisibilidade.setText("Publica");
         } else {
-            lbVisibilidade.setText("Publica");
+            lbVisibilidade.setText("Privada");
         }
     }
     
@@ -493,10 +493,13 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         
         Lista lista = gerenciadorlisas.buscarMinhasListas().get(tbListas.getSelectedRow());
         
-        int res = JOptionPane.showConfirmDialog(null, "Deseja Mesmo alterar a lista " + lista.getNome() + "?","Alterar", JOptionPane.YES_NO_OPTION);
+        int res = JOptionPane.showConfirmDialog(null, "Deseja Mesmo alterar a visibilidade da lista " + lista.getNome() + "?","Alterar", JOptionPane.YES_NO_OPTION);
         
         if(res == JOptionPane.YES_OPTION){
-            lista.setPublica(true);
+            if(lista.isPublica())
+                lista.setPublica(false);
+            else
+                lista.setPublica(true);
             verificaPrivacidade(lista);
         }
     }   
