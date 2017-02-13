@@ -297,7 +297,7 @@ public class TelaMeusFilmes {
         btnDeletarFilme = new JButton(I18N.obterBotaoDeletar(),
                 GerenciadorDeImagens.DELETAR);
 
-        btnFinalizar = new JButton(I18N.obterBotaoCancelar(),
+        btnFinalizar = new JButton("Finalizar",
                 GerenciadorDeImagens.CANCELAR);
 
         prepararComponentesEstadoInicial();

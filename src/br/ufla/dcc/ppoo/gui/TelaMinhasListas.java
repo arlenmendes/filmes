@@ -31,9 +31,11 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     
     private TelaPrincipal telaPrincipal;
     
-    private final GerenciadorListas gerenciadorlisas;
+    private final GerenciadorListas gerenciadorlistas;
     
     private List<String> chaves;
+    
+    private boolean novaLista;
     
     private DefaultTableModel model;
     
@@ -41,7 +43,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
      * Creates new form TelaMinhasListas2
      */
     public TelaMinhasListas() throws Exception {
-        gerenciadorlisas = new GerenciadorListas();
+        gerenciadorlistas = new GerenciadorListas();
         inicializar();
     }
     
@@ -54,6 +56,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         chaves = new ArrayList<>();
+        novaLista = true;
     }
 
     /**
@@ -273,6 +276,8 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         
         try {
             new TelaMinhasListas();
+            GerenciadorFilmes gF = new GerenciadorFilmes();
+            gF.limparInstancia();
         } catch (Exception ex) {
             Logger.getLogger(TelaMinhasListas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -368,7 +373,18 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     
     private void adicionarFilme(){
         TelaMeusFilmes telaMeusFilmes = new TelaMeusFilmes(telaPrincipal);
-        telaMeusFilmes.inicializar();
+        if(novaLista){
+            telaMeusFilmes.inicializar();
+        } else {
+            GerenciadorFilmes gF = new GerenciadorFilmes();
+            Lista lista = gerenciadorlistas.buscarMinhasListas().get(tbListas.getSelectedRow());
+            
+            for(Filme filme : lista.getFilmes()){
+                gF.cadastrarFilme(filme);
+            }
+            
+            telaMeusFilmes.inicializar();
+        }
     }
     
     private void salvarLista() throws Exception, Throwable{
@@ -377,7 +393,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         lista.setFilmes(gF.getListaFilme());
         lista.setUsuario(SessaoUsuario.obterInstancia().obterUsuario());
         
-        int resposta = gerenciadorlisas.criar(lista);
+        int resposta = gerenciadorlistas.criar(lista);
         if(resposta == 200){
             gF.limparInstancia();
             prepararComponenteInicial();
@@ -406,6 +422,8 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     }
     
     private void prepararComponenteNovaLista(){
+        
+        
         txtNome.setEditable(true);
         txtNome.setText("");
         txtPalavra.setEditable(true);
@@ -428,7 +446,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         titulosColunas[0] = "Nome";
         titulosColunas[1] = "Palavras-Chave";
         
-        List<Lista> listas = gerenciadorlisas.buscarMinhasListas();
+        List<Lista> listas = gerenciadorlistas.buscarMinhasListas();
         
         Object[][] dados = new Object [listas.size()][2];
         
@@ -444,7 +462,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     }
     
     public void atualizarTabela(){
-        List<Lista> listas = gerenciadorlisas.buscarMinhasListas();
+        List<Lista> listas = gerenciadorlistas.buscarMinhasListas();
         
         Lista lista = listas.get(listas.size() - 1);
         
@@ -458,7 +476,8 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     }
     
     private void selecionaLista(){
-        Lista lista = gerenciadorlisas.buscarMinhasListas().get(tbListas.getSelectedRow());
+        novaLista = false;
+        Lista lista = gerenciadorlistas.buscarMinhasListas().get(tbListas.getSelectedRow());
         String chave = "";
         txtNome.setText(lista.getNome());
 
@@ -491,7 +510,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     
     private void alterarVisibilidade(){
         
-        Lista lista = gerenciadorlisas.buscarMinhasListas().get(tbListas.getSelectedRow());
+        Lista lista = gerenciadorlistas.buscarMinhasListas().get(tbListas.getSelectedRow());
         
         int res = JOptionPane.showConfirmDialog(null, "Deseja Mesmo alterar a visibilidade da lista " + lista.getNome() + "?","Alterar", JOptionPane.YES_NO_OPTION);
         
