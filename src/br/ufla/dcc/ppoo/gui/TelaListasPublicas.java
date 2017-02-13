@@ -12,6 +12,7 @@ import br.ufla.dcc.ppoo.servicos.GerenciadorListas;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -188,7 +189,9 @@ public class TelaListasPublicas extends javax.swing.JDialog {
         titulosColunas[1] = "Palavras-Chave";
         
         Object[][] dados = new Object [listas.size()][2];
-        
+        if(listas.size() < 1){
+            JOptionPane.showMessageDialog(null,"Sua busca nao retornou resultados.");
+        }
         for(int i=0; i< listas.size(); i++){
             dados[i][0] = listas.get(i).getNome();
             String chave = "";
