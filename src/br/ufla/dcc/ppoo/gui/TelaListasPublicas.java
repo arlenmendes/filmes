@@ -6,11 +6,14 @@
 package br.ufla.dcc.ppoo.gui;
 
 import br.ufla.dcc.ppoo.dao.lista.Teste;
+import br.ufla.dcc.ppoo.modelo.Filme;
 import br.ufla.dcc.ppoo.modelo.Lista;
 import br.ufla.dcc.ppoo.servicos.GerenciadorListas;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,15 +24,24 @@ public class TelaListasPublicas extends javax.swing.JDialog {
     
     private final GerenciadorListas gerenciadorlisas;
     
-    private DefaultTableModel model;
+    private List<Lista> listas;
+    
+    private DefaultTableModel modelListas;
+    
+    private DefaultTableModel modelFilmes;
+    
+    private static String palavra;
 
     /**
      * Creates new form TelaListasPublicas
      */
-    public TelaListasPublicas(java.awt.Frame parent, boolean modal) throws Exception {
+    public TelaListasPublicas(java.awt.Frame parent, boolean modal, String palavra) throws Exception {
         super(parent, modal);
+        this.palavra = palavra;
         gerenciadorlisas = new GerenciadorListas();
-        construirTabela();
+        listas = gerenciadorlisas.buscaListaPublica(palavra);
+        construirTabelaListas();
+        contruirtabelaFilmesVazia();
         initComponents();
         this.setLocationRelativeTo(null);
         
@@ -45,28 +57,74 @@ public class TelaListasPublicas extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbListas = new javax.swing.JTable();
+        lbTitulo = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbFilmes = new javax.swing.JTable();
+        lbFilmes = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(model);
-        jScrollPane1.setViewportView(jTable1);
+        tbListas.setModel(modelListas);
+        tbListas.getTableHeader().setReorderingAllowed(false);
+        tbListas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbListasMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbListas);
+
+        lbTitulo.setFont(new java.awt.Font("Open Sans", 0, 18)); // NOI18N
+        lbTitulo.setText("Listas Publicas");
+
+        tbFilmes.setModel(modelFilmes);
+        tbFilmes.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tbFilmes);
+
+        lbFilmes.setFont(new java.awt.Font("Open Sans", 0, 18)); // NOI18N
+        lbFilmes.setText("Filmes");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbTitulo)
+                .addGap(267, 267, 267))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(261, 261, 261)
+                .addComponent(lbFilmes)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 76, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(lbFilmes)
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tbListasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbListasMouseClicked
+        if(tbListas.getSelectedRow() > -1){
+            atualizarTabelaFilmes();
+        }
+    }//GEN-LAST:event_tbListasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -100,7 +158,7 @@ public class TelaListasPublicas extends javax.swing.JDialog {
             public void run() {
                 TelaListasPublicas dialog = null;
                 try {
-                    dialog = new TelaListasPublicas(new javax.swing.JFrame(), true);
+                    dialog = new TelaListasPublicas(new javax.swing.JFrame(), true, palavra);
                 } catch (Exception ex) {
                     Logger.getLogger(TelaListasPublicas.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -117,15 +175,17 @@ public class TelaListasPublicas extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lbFilmes;
+    private javax.swing.JLabel lbTitulo;
+    private javax.swing.JTable tbFilmes;
+    private javax.swing.JTable tbListas;
     // End of variables declaration//GEN-END:variables
-    private void construirTabela(){
+    private void construirTabelaListas(){
         
         Object[] titulosColunas = new Object[2];
         titulosColunas[0] = "Nome";
         titulosColunas[1] = "Palavras-Chave";
-        
-        List<Lista> listas = gerenciadorlisas.buscaListaPublica();
         
         Object[][] dados = new Object [listas.size()][2];
         
@@ -137,7 +197,36 @@ public class TelaListasPublicas extends javax.swing.JDialog {
             }
             dados[i][1] = chave;
         }
-        model = new DefaultTableModel(dados, titulosColunas);
+        
+        modelListas = new DefaultTableModel(dados, titulosColunas);
     }
-
+    
+    private void atualizarTabelaFilmes(){
+        
+        Lista lista = listas.get(tbListas.getSelectedRow());
+        List<Filme> filmes = lista.getFilmes();
+        
+        if(tbFilmes.getRowCount() > 0){
+            for(int i = 1; i <= tbFilmes.getRowCount(); i++){
+                modelFilmes.removeRow(0);
+            }
+        }
+        
+        for(int i=0; i< filmes.size(); i++){
+            modelFilmes.addRow(new Object[]{filmes.get(i).getNome(), filmes.get(i).getGenero()});
+        }
+        
+        
+    }
+    
+    private void contruirtabelaFilmesVazia(){
+        Object[] titulosColunas = new Object[2];
+        titulosColunas[0] = "Titulo";
+        titulosColunas[1] = "Genero";
+        Object[][] dados = new Object [0][2];
+        
+        modelFilmes = new DefaultTableModel(dados, titulosColunas);
+    }
+    
+    
 }

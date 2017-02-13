@@ -25,6 +25,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 
 /**
@@ -145,7 +146,9 @@ public class TelaPrincipal {
             public void actionPerformed(ActionEvent e) {
                 TelaListasPublicas tela;
                 try {
-                    tela = new TelaListasPublicas(janela, false);
+                    String palavra = null;
+                    palavra = JOptionPane.showInputDialog("Informe um titulo de uma lista ou  uma palavra chave para filtrar as listas publicas. Ou deixe em branco para retornar todas.");
+                    tela = new TelaListasPublicas(janela, false, palavra);
                     tela.setLocationRelativeTo(null);
                     tela.setVisible(true);
                     tela.setModal(true);
@@ -194,6 +197,7 @@ public class TelaPrincipal {
         menuListasPublicas = new JMenuItem("Listas Publicas");
 
         if (!sessaoUsuario.estahLogado()) {
+            menuInicio.add(menuListasPublicas);
             menuInicio.add(menuEntrar);
             menuInicio.add(menuCadastrarUsuario);
         } else {            

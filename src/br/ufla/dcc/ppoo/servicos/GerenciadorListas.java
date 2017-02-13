@@ -8,6 +8,7 @@ package br.ufla.dcc.ppoo.servicos;
 import br.ufla.dcc.ppoo.dao.ListaDAO;
 import br.ufla.dcc.ppoo.dao.lista.ListaDAOLista;
 import br.ufla.dcc.ppoo.modelo.Lista;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -49,12 +50,29 @@ public class GerenciadorListas {
         return lista;
     }
     
-    public List<Lista> buscaListaPublica(){
+    public List<Lista> buscaListaPublica(String palavra){
         
         List<Lista> lista = null;
         
-        lista = repositorioListas.buscarListaPublica();
         
+        
+        if(palavra == null || palavra.equals("")){
+            lista = repositorioListas.buscarListaPublica();
+            
+        } else {
+            lista = new ArrayList<>();
+            for(Lista list: repositorioListas.buscarListaPublica()){
+                boolean verifica = true;
+                for(String chave : list.getChaves()){
+                    if(list.getNome().equals(palavra) && verifica){
+                        lista.add(list);
+                        verifica = false;
+                    } else if(chave.equals(palavra) && verifica){
+                        lista.add(list);
+                    }
+                }
+            }
+        }
         return lista;
     }
 }
