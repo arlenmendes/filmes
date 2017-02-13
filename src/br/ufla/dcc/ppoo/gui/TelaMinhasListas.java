@@ -5,7 +5,6 @@
  */
 package br.ufla.dcc.ppoo.gui;
 
-import br.ufla.dcc.ppoo.dao.lista.Teste;
 import br.ufla.dcc.ppoo.modelo.Filme;
 import br.ufla.dcc.ppoo.modelo.Lista;
 import br.ufla.dcc.ppoo.seguranca.SessaoUsuario;
@@ -48,8 +47,6 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     }
     
     public void inicializar() throws Exception{
-//        Teste teste = new Teste();
-//        teste.main2();
         construirTabela();
         initComponents();
         prepararComponenteInicial();
@@ -85,6 +82,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         btnVisibilidade = new javax.swing.JButton();
         lbVisibilidade = new javax.swing.JLabel();
         lbPalavras = new javax.swing.JLabel();
+        btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listas de Filmes");
@@ -164,6 +162,13 @@ public class TelaMinhasListas extends javax.swing.JFrame {
 
         lbPalavras.setText("fljljfds");
 
+        btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -202,6 +207,8 @@ public class TelaMinhasListas extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnAdicionarChaves, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,7 +248,8 @@ public class TelaMinhasListas extends javax.swing.JFrame {
                     .addComponent(btnEditar)
                     .addComponent(btnNova)
                     .addComponent(btnRemover)
-                    .addComponent(btnCancelar))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnSair))
                 .addContainerGap())
         );
 
@@ -288,7 +296,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdicionarChavesActionPerformed
 
     private void btnFilmesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilmesActionPerformed
-        adicionarFilme();
+        gerenciarFilme();
     }//GEN-LAST:event_btnFilmesActionPerformed
 
     private void tbListasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbListasMouseClicked
@@ -298,6 +306,10 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     private void btnVisibilidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisibilidadeActionPerformed
         alterarVisibilidade();
     }//GEN-LAST:event_btnVisibilidadeActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -346,6 +358,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     private javax.swing.JButton btnFilmes;
     private javax.swing.JButton btnNova;
     private javax.swing.JButton btnRemover;
+    private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVisibilidade;
     private javax.swing.JScrollPane jScrollPane1;
@@ -371,18 +384,16 @@ public class TelaMinhasListas extends javax.swing.JFrame {
         }
     }
     
-    private void adicionarFilme(){
-        TelaMeusFilmes telaMeusFilmes = new TelaMeusFilmes(telaPrincipal);
-        if(novaLista){
+    private void gerenciarFilme(){
+        
+        if(novaLista == true){
+            TelaMeusFilmes telaMeusFilmes = new TelaMeusFilmes(telaPrincipal);
             telaMeusFilmes.inicializar();
         } else {
             GerenciadorFilmes gF = new GerenciadorFilmes();
             Lista lista = gerenciadorlistas.buscarMinhasListas().get(tbListas.getSelectedRow());
-            
-            for(Filme filme : lista.getFilmes()){
-                gF.cadastrarFilme(filme);
-            }
-            
+            lista.getFilmes().forEach(gF::cadastrarFilme);
+            TelaMeusFilmes telaMeusFilmes = new TelaMeusFilmes(telaPrincipal);
             telaMeusFilmes.inicializar();
         }
     }
@@ -423,7 +434,7 @@ public class TelaMinhasListas extends javax.swing.JFrame {
     
     private void prepararComponenteNovaLista(){
         
-        
+        novaLista = true;
         txtNome.setEditable(true);
         txtNome.setText("");
         txtPalavra.setEditable(true);

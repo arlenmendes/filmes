@@ -26,7 +26,7 @@ public class Teste {
     
     public static void main(String[] args) throws Exception {
         
-        GerenciadorListas gF = new GerenciadorListas();
+        GerenciadorListas gL = new GerenciadorListas();
         
         List<String> ch = new ArrayList<>();
         ch.add("Dados");
@@ -45,8 +45,8 @@ public class Teste {
         arlen.setUsuario(user);
         arlen.setPublica(true);
         
-        int a = gF.criar(arlen);
-        int b = gF.criar(arlen);
+        int a = gL.criar(arlen);
+        int b = gL.criar(arlen);
         
 //        TelaMinhasListas tela = new TelaMinhasListas();
 //        tela.setVisible(true);

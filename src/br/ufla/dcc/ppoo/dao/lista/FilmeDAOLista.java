@@ -79,7 +79,7 @@ public class FilmeDAOLista implements FilmeDAO {
     @Override
     public void limparInstancia(){
         while(listaFilme.size() > 0){
-            listaFilme.remove(listaFilme.size()-1);
+            listaFilme.remove(0);
         }
     };
 }
